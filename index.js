@@ -5,10 +5,13 @@ let computerPoint = 0;
 let whoWon
 let winer
 
+
+const buttons = document.querySelectorAll(`button`)
+
+// function pour generer un element aléatoirement 
 function getRandomInt() {
     return Math.floor((Math.random() * 3)+1);
 }
-
 function getComputerChoice(){
     let randomNumber = getRandomInt()
     if(randomNumber === 1){
@@ -19,7 +22,7 @@ function getComputerChoice(){
         return aiChoice = "rock"
     }
 }
-
+//fonction permettant de savoir qui a gagné + compter les points de chaque rounds
 function playRound(playerSelection,computerSelection){
     if((playerSelection === "rock" && computerSelection === "scissors")
     ||(playerSelection === "scissors" && computerSelection === "paper")
@@ -32,21 +35,19 @@ function playRound(playerSelection,computerSelection){
         computerPoint = computerPoint + 1;
         return whoWon = `You lose ! ${computerSelection} beats ${playerSelection}`
     }
-
+    
 }
-
-function playGame(){
-    for(let i = 0 ; i < 5; i++){
-
-        computerSelection = getComputerChoice()
-        playerSelection = prompt(`Entrez un element Rock/paper/scissors`)
-        console.log(playerSelection)
-        console.log(computerSelection)
-        playRound(playerSelection,computerSelection)
-        console.log(whoWon)
-        console.log(playerPoint)
-        console.log(computerPoint)
-    }
+//Fonction permettant de lancer une partie en 5 round et d'afficher le vainqueur a la fin
+function playGame(playerSelection){
+    /*for(let i = 0 ; i < 5; i++){
+    }*/
+    computerSelection = getComputerChoice()
+    console.log(playerSelection)
+    console.log(computerSelection)
+    playRound(playerSelection,computerSelection)
+    console.log(whoWon)
+    console.log(playerPoint)
+    console.log(computerPoint)
     if(playerPoint > computerPoint){
         console.log(`You won ${playerPoint} - ${computerPoint}`)
     }else{
@@ -54,6 +55,14 @@ function playGame(){
     }
 
 }
+function boutonClique(event) {
+        const boutonId = event.target.id;
+        playGame(boutonId);
+        // Vous pouvez ajouter ici le code que vous souhaitez exécuter lorsque n'importe quel bouton est cliqué
+    }
+buttons.forEach(function(bouton) {
+    bouton.addEventListener('click', boutonClique);});
+    
 
-playGame()
+
 
