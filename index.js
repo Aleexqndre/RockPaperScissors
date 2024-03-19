@@ -4,6 +4,13 @@ let playerPoint = 0;
 let computerPoint = 0;
 let whoWon
 let winer
+const body = document.querySelector(`body`)
+const winnerDiv = document.createElement(`div`)
+const roundDisplay = document.createElement(`p`)
+const scoreDisplay = document.createElement(`p`)
+body.appendChild(winnerDiv)
+winnerDiv.appendChild(roundDisplay)
+winnerDiv.appendChild(scoreDisplay)
 
 
 const buttons = document.querySelectorAll(`button`)
@@ -22,8 +29,14 @@ function getComputerChoice(){
         return aiChoice = "rock"
     }
 }
+// Fonction permettant l'actualisation de l'affichage des points 
+function displayPoints(){
+    scoreDisplay.textContent = `Player : ${playerPoint} - ${computerPoint} : Computer`
+}
 //fonction permettant de savoir qui a gagné + compter les points de chaque rounds
 function playRound(playerSelection,computerSelection){
+    console.log(playerSelection)
+    roundDisplay.textContent = `Player : ${playerSelection} - ${computerSelection} : Computer`
     if((playerSelection === "rock" && computerSelection === "scissors")
     ||(playerSelection === "scissors" && computerSelection === "paper")
     ||(playerSelection === "paper" && computerSelection === "rock")){
@@ -35,30 +48,12 @@ function playRound(playerSelection,computerSelection){
         computerPoint = computerPoint + 1;
         return whoWon = `You lose ! ${computerSelection} beats ${playerSelection}`
     }
-    
 }
-//Fonction permettant de lancer une partie en 5 round et d'afficher le vainqueur a la fin
-function playGame(playerSelection){
-    /*for(let i = 0 ; i < 5; i++){
-    }*/
-    computerSelection = getComputerChoice()
-    console.log(playerSelection)
-    console.log(computerSelection)
-    playRound(playerSelection,computerSelection)
-    console.log(whoWon)
-    console.log(playerPoint)
-    console.log(computerPoint)
-    if(playerPoint > computerPoint){
-        console.log(`You won ${playerPoint} - ${computerPoint}`)
-    }else{
-        console.log(`You lose ${playerPoint} - ${computerPoint}`)
-    }
 
-}
 function boutonClique(event) {
         const boutonId = event.target.id;
-        playGame(boutonId);
-        // Vous pouvez ajouter ici le code que vous souhaitez exécuter lorsque n'importe quel bouton est cliqué
+        playRound(boutonId, getComputerChoice());
+        displayPoints()
     }
 buttons.forEach(function(bouton) {
     bouton.addEventListener('click', boutonClique);});
