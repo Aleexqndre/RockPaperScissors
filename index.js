@@ -49,15 +49,32 @@ function playRound(playerSelection,computerSelection){
         return whoWon = `You lose ! ${computerSelection} beats ${playerSelection}`
     }
 }
+function resetScore(){
+    playerPoint = 0;
+    computerPoint = 0;
+    displayPoints()
 
+}
 function boutonClique(event) {
         const boutonId = event.target.id;
         playRound(boutonId, getComputerChoice());
         displayPoints()
+        if(playerPoint === 5 || computerPoint === 5){
+            displayPoints()
+            if(playerPoint > computerPoint){
+                alert(`You won ${playerPoint} - ${computerPoint}`)
+                resetScore()
+            }
+            else{ 
+                alert(`You lose ${playerPoint} - ${computerPoint}`)
+                resetScore()
+            }
+        }
     }
 buttons.forEach(function(bouton) {
     bouton.addEventListener('click', boutonClique);});
     
 
+displayPoints()
 
 
